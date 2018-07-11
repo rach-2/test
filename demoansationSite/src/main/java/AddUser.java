@@ -13,10 +13,10 @@ public class AddUser
     private WebElement loginLink;
 
 
-    public void addUser()
+    public void addUser(String userName, String ussrPassword)
     {
-        username.sendKeys("tester");
-        password.sendKeys("test");
+        username.sendKeys(userName);
+        password.sendKeys(ussrPassword);
         saveButton.click();
         loginLink.click();
     }

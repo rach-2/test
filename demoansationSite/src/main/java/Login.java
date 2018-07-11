@@ -10,10 +10,10 @@ public class Login
     @FindBy(xpath ="/html/body/table/tbody/tr/td[1]/form/div/center/table/tbody/tr/td[1]/table/tbody/tr[3]/td[2]/p/input")
     private WebElement loginButtton;
 
-    public void  login()
+    public void  login(String userName, String userPassword)
     {
-        username.sendKeys("tester");
-        password.sendKeys("test");
+        username.sendKeys();
+        password.sendKeys();
         loginButtton.click();
     }
 
