@@ -1,3 +1,6 @@
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.junit.Before;
 import org.junit.Test;
 import  org.junit.Assert;
@@ -24,5 +27,29 @@ public class demoSiteTest
         adduser.addUser();
         login.login();
         Assert.assertEquals("**Successful Login**", driver.findElement(By.xpath("/html/body/table/tbody/tr/td[1]/big/blockquote/blockquote/font/center/b")).getText());
+        ExtentReports report = new ExtentReports("C:\\Devolopment\\demoSiteReport.html", true);
+        ExtentTest test =  report.startTest("Login");
+        //driver.get("http://thedemosite.co.uk/addauser.php");
+       // driver.get("http://thedemosite.co.uk/login.php");
+        String loginStatus = driver.findElement(By.xpath("/html/body/table/tbody/tr/td[1]/big/blockquote/blockquote/font/center/b")).getText();
+        test.log(LogStatus.INFO, "Brower started" );
+        if(loginStatus.equals("**Successful Login**"))
+        {
+            test.log(LogStatus.PASS,"Login");
+        }
+        else
+        {
+            test.log(LogStatus.FAIL, "Login");
+        }
+        report.endTest(test);
+        report.flush();
+        driver.quit();
+    }
+
+
+    @Test
+    public void demoSiteTest()
+    {
+
     }
 }
