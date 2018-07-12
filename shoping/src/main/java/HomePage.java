@@ -6,4 +6,9 @@ public class HomePage
 {
      @FindBy(xpath = "//*[@id=\"search_query_top\"]")
       private  WebElement searcBar;
+
+     public  void  searhBar ()
+     {
+           searcBar.sendKeys()
+     }
 }

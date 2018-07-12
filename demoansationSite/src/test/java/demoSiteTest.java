@@ -11,7 +11,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,12 +19,12 @@ import java.io.InputStream;
 public class demoSiteTest
 {
     WebDriver driver;
-    //String data ="C:\\Development\\demoSiteDDT.xssf";
+    String data ="C:\\Devolopment\\DemoSiteDDT.xlsx";
     @Before
     public  void setUp()
     {
 
-        System.setProperty("webdriver.chrome.driver","C:\\Development\\web-driver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","C:\\Devolopment\\web-driver\\chromedriver.exe");
         driver = new ChromeDriver();
     }
     @Test
@@ -33,18 +32,16 @@ public class demoSiteTest
     {
 
 
-       // FileInputStream dataFile = new FileInputStream(data);
-        XSSFWorkbook workbook = new XSSFWorkbook("C:\\Development\\demoSiteDDT.xssf");
+       FileInputStream dataFile = new FileInputStream(data);
+        XSSFWorkbook workbook = new XSSFWorkbook(dataFile);
         XSSFSheet  sheet = workbook.getSheetAt(0);
 
         for(int i = 1; i<sheet.getPhysicalNumberOfRows();i++)
         {
             XSSFCell userName = sheet.getRow(i).getCell(0);
             XSSFCell passsword =  sheet.getRow(i).getCell(1);
-
             String userLoginName =  userName.getStringCellValue();
             String userPassword = passsword.getStringCellValue();
-
             driver.get("http://thedemosite.co.uk/addauser.php");
             AddUser adduser = PageFactory.initElements(driver, AddUser.class);
             Login login = PageFactory.initElements(driver, Login.class);
@@ -53,13 +50,16 @@ public class demoSiteTest
             Assert.assertEquals("**Successful Login**", driver.findElement(By.xpath("/html/body/table/tbody/tr/td[1]/big/blockquote/blockquote/font/center/b")).getText());
             ExtentReports report = new ExtentReports("C:\\Devolopment\\demoSiteReport.html", true);
             ExtentTest test = report.startTest("Login");
-            //driver.get("http://thedemosite.co.uk/addauser.php");
-            // driver.get("http://thedemosite.co.uk/login.php");
+            driver.get("http://thedemosite.co.uk/addauser.php");
+             driver.get("http://thedemosite.co.uk/login.php");
             String loginStatus = driver.findElement(By.xpath("/html/body/table/tbody/tr/td[1]/big/blockquote/blockquote/font/center/b")).getText();
             test.log(LogStatus.INFO, "Brower started");
-            if (loginStatus.equals("**Successful Login**")) {
+            if (loginStatus.equals("**Successful Login**"))
+            {
                 test.log(LogStatus.PASS, "Login");
-            } else {
+            }
+            else
+            {
                 test.log(LogStatus.FAIL, "Login");
             }
             report.endTest(test);
